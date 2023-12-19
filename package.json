@@ -1,0 +1,13 @@
+{
+  "name": "goit-react-hw-node-01",
+  "version": "1.0.0",
+  "description": "Node home work",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "start:dev": "nodemon ./src/index.js"
+  },
+  "keywords": [],
+  "author": "Paulina Cichowska",
+  "license": "ISC"
+}
