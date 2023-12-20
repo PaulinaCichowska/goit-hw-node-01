@@ -18,12 +18,15 @@ async function getContactById(contactId) {
     try {
         const data = await fs.readFile(contactsPath, 'utf-8');
         const parseData = JSON.parse(data);
+        let message = `Cant find this contact`.red
 
         parseData.map(contact => {
-            if (contactId === contact.id) {
-                console.log(`${contact.name}\n${contact.email}\n${contact.phone}`.green)
+            if (contactId == contact.id) {
+                message = `${contact.name}\n${contact.email}\n${contact.phone}`.green
             }
         });
+
+        console.log(message)
     } catch (err) {
         return console.log(err);
     }
@@ -50,11 +53,32 @@ async function removeContact(contactId) {
 }
 
 async function addContact(name, email, phone) {
+    const nanoid = import('nanoid');
+    const ID = (await nanoid).nanoid;
+
     try {
-        const data = await fs.readFile(contactsPath, { encoding: 'utf8' });
-        console.log(data);
+        const newContact = {
+            name,
+            email,
+            phone,
+            id: ID(21),
+        };
+
+        const data = await fs.readFile(contactsPath, 'utf-8');
+        const dataParse = JSON.parse(data);
+
+        if (dataParse.find(contact => contact.name.toLowerCase() === newContact.name.toLowerCase())) {
+            return console.log(`This Contact already exist on list`.red);
+        } else {
+            dataParse.push(newContact);
+        }
+
+        const updatedContacts = JSON.stringify(dataParse, null, 2);
+
+        fs.writeFile(contactsPath, updatedContacts, 'utf-8');
+        return console.log(`Contact added`.green);
     } catch (err) {
-        console.log(err);
+        return console.log(err);
     }
 }
 
