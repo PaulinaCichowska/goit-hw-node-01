@@ -2,6 +2,9 @@ const { Command } = require("commander");
 const { listContacts, getContactById, addContact, removeContact } = require('./contacts')
 const program = new Command();
 
+// console.log(listContacts())
+console.log(removeContact('drsAJ4SHPYqZeG-83QTVW'))
+
 program
   .option("-a, --action <type>", "choose action")
   .option("-i, --id <type>", "user id")
@@ -16,6 +19,7 @@ const argv = program.opts();
 function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
+
       listContacts();
       break;
 
@@ -32,9 +36,8 @@ function invokeAction({ action, id, name, email, phone }) {
       break;
 
     default:
-      console.log("ja pierdole")
       console.warn("\x1B[31m Unknown action type!");
   }
 }
-console.log("xd")
-invokeAction(argv);
+
+// invokeAction(argv);
